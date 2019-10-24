@@ -7103,11 +7103,6 @@
               <FilePath>.\humiditytemperature.cpp</FilePath>
             </File>
             <File>
-              <FileName>lightsensor.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>.\lightsensor.cpp</FilePath>
-            </File>
-            <File>
               <FileName>MMA8451Q.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>.\MMA8451Q.cpp</FilePath>
@@ -7141,6 +7136,16 @@
               <FileName>gps.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\gps.h</FilePath>
+            </File>
+            <File>
+              <FileName>colorsensor.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>.\colorsensor.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>lightsensor.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>.\lightsensor.cpp</FilePath>
             </File>
           </Files>
         </Group>

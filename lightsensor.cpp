@@ -8,7 +8,7 @@ Thread lightsensor_thread(osPriorityNormal, 512); // 1K stack size
 void lightsensor_callback(); 
 
 void lightsensor_callback() {
-  AnalogIn lightsensor(A2); 
+  AnalogIn lightsensor(PA_4); 
    
   while (true) {
 			

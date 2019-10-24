@@ -27,11 +27,18 @@ extern Thread gps_thread;
 //extern void gps_callback();
 // main() runs in its own thread in the OS
 
+extern Thread colorsensor_thread;
+extern void colorsensor_callback();
+extern int clear_value, red_value, green_value, blue_value;
+extern char dominant_color;
+
 /*
 Dudas: 
 ¿Cómo funciona la memoria de un Thread?
 ¿Qué es mejor: usar extern, ficheros de cabecera (.h) o clases?
 */
+
+
 int main() {
 
   threadANALOG.start(ANALOG_thread);
@@ -39,6 +46,7 @@ int main() {
 	lightsensor_thread.start(lightsensor_callback);
 	accelerometer_thread.start(accelerometer_callback);
 	gps_thread.start(gps_callback);
+	colorsensor_thread.start(colorsensor_callback);
 
   pc.printf("mbed-os-rev: %d.%d.%d\r\n", MBED_MAJOR_VERSION, MBED_MINOR_VERSION, MBED_PATCH_VERSION);	
   
@@ -51,6 +59,7 @@ int main() {
 		pc.printf("\n\r#Sats: %d, Lat(UTC): %.6f, Long(UTC): %.6f, Altitude: %.1f, GPS_time: %2d:%2d:%2d",
 								gps_info.nsats, gps_info.lat, gps_info.lon, gps_info.alt,
 								gps_info.hour, gps_info.minute, gps_info.seconds);
+		pc.printf("\n\rClear (%d), Red (%d), Green (%d), Blue (%d), Dominant Color: %c", clear_value, red_value, green_value, blue_value, dominant_color);
 		pc.printf("\n");
     wait(2);
   }

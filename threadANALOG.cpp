@@ -9,11 +9,11 @@ void ANALOG_thread();
 
 void ANALOG_thread() {
 	
-	AnalogIn soilmois(A0); 
+	AnalogIn soilmois(PA_0); 
 		
 	while (true) {
-				
 		valueSM=soilmois*100;
+
 		Thread::wait(200);		  
   }
 }
