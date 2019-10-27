@@ -11,11 +11,10 @@ void lightsensor_callback() {
   AnalogIn lightsensor(PA_4); 
    
   while (true) {
-			
 		valueLight = lightsensor*100;
 		Thread::wait(200);
- }
-}
+	}
+}	
 
 
 

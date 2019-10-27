@@ -109,10 +109,10 @@ void colorsensor_callback() {
 	char blue_reg[1] = {0x9A}; // {‭1001 1010‬} -> 0x1A and we set 1st bit to 1
 	char blue_data[2] = {0,0};
    
+	whiteLed = 1;
   while (true) {
 		
 		if (read_Colour){
-			whiteLed = 1;
 			
 			readColour = 0; //readColour = false
 			//Reads clear value
@@ -163,7 +163,7 @@ void colorsensor_callback() {
 					ledB.write(0);
 					break;
 			} 
-			whiteLed = 0;
+			//whiteLed = 0;
 		}
 		Thread::wait(1000);
 	}

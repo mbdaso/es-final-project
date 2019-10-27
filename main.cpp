@@ -1,67 +1,86 @@
 #include "mbed.h"
 #include "rtos.h"
+#include "common.h"
 #include "gps.h"
+#include "modes.h"
 #include "MMA8451Q.h"
 
+//Preguntas:
+// 1) 
+// a) Usar señales para los threads:
+// Pros: no hay que crearlos y destruirlos
+// Contras: no se puede "resetear" el thread, hay que mantenerlos ejecutandose
+// b) Alternativa: thread.start() thread.terminate()
+// Cuál es mejor??
+// 2) Cómo funcionan las señales? Siempre hay que mandar 0x01?
 
 Serial pc(USBTX,USBRX,19200);
+int current_mode = TEST_MODE;
 
-extern Thread threadANALOG;
-extern void ANALOG_thread();
-extern float valueSM;
+DigitalOut led1(LED1);
+DigitalOut led2(LED2);
+DigitalOut led3(LED3);
 
-extern Thread lightsensor_thread;
-extern void lightsensor_callback();
-extern float valueLight;
+Ticker mode_ticker;
 
-extern Thread humiditytemperature_thread;
-extern void humiditytemperature_callback();
-extern float hum, temp;
+EventFlags event_flags;
 
-extern Thread accelerometer_thread;
-extern void accelerometer_callback();
-extern float x, y, z;
-
-extern struct Gps_info gps_info;
-extern Thread gps_thread;
-//extern void gps_callback();
-// main() runs in its own thread in the OS
-
-extern Thread colorsensor_thread;
-extern void colorsensor_callback();
-extern int clear_value, red_value, green_value, blue_value;
-extern char dominant_color;
-
-/*
-Dudas: 
-¿Cómo funciona la memoria de un Thread?
-¿Qué es mejor: usar extern, ficheros de cabecera (.h) o clases?
-*/
-
-
-int main() {
-
-  threadANALOG.start(ANALOG_thread);
-  humiditytemperature_thread.start(humiditytemperature_callback);
-	lightsensor_thread.start(lightsensor_callback);
-	accelerometer_thread.start(accelerometer_callback);
-	gps_thread.start(gps_callback);
-	colorsensor_thread.start(colorsensor_callback);
-
-  pc.printf("mbed-os-rev: %d.%d.%d\r\n", MBED_MAJOR_VERSION, MBED_MINOR_VERSION, MBED_PATCH_VERSION);	
-  
-	while(true){ 
-		
-		pc.printf("\n\rSoil Moisture: %.2f%%", valueSM);
-    pc.printf("\n\rLIGHT: %.2f%%", valueLight);  
-		pc.printf("\n\rACCELEROMETER: X_axis: %.2f, Y_axis: %.2f, Z_axis: %.2f", x, y, z);
-		pc.printf("\n\rTEMP/HUM: Temperature: %.2f C. Relative Humidity: %.4f%", temp, hum);
-		pc.printf("\n\r#Sats: %d, Lat(UTC): %.6f, Long(UTC): %.6f, Altitude: %.1f, GPS_time: %2d:%2d:%2d",
-								gps_info.nsats, gps_info.lat, gps_info.lon, gps_info.alt,
-								gps_info.hour, gps_info.minute, gps_info.seconds);
-		pc.printf("\n\rClear (%d), Red (%d), Green (%d), Blue (%d), Dominant Color: %c", clear_value, red_value, green_value, blue_value, dominant_color);
-		pc.printf("\n");
-    wait(2);
-  }
+void mode_signal_sender(){ //Send current mode to all modes
+	event_flags.set(current_mode);
 }
 
+void userButton_isr(){
+	mode_ticker.detach();
+	switch(current_mode){
+		case TEST_MODE:
+			current_mode = NORMAL_MODE;
+			mode_ticker.attach(mode_signal_sender, NORMAL_MODE_TIME);
+			break;
+		case NORMAL_MODE:
+			current_mode = ADVANCED_MODE;
+			mode_ticker.attach(mode_signal_sender, ADVANCED_MODE_TIME);
+			break;
+		default:
+			current_mode = TEST_MODE;			
+			mode_ticker.attach(mode_signal_sender, TEST_MODE_TIME);
+			break;
+		/*default:
+			current_mode = ERROR_MODE;*/
+	}	
+	led1 = static_cast<int>(current_mode == TEST_MODE);
+	led2 = static_cast<int>(current_mode == NORMAL_MODE);
+	led3 = static_cast<int>(current_mode == ADVANCED_MODE);
+}
+
+int main(){
+	//Setup things
+	threadANALOG.start(ANALOG_thread);
+	lightsensor_thread.start(lightsensor_callback);
+	gps_thread.start(gps_callback);
+	
+  humiditytemperature_thread.start(humiditytemperature_callback);	
+	accelerometer_thread.start(accelerometer_callback);
+	colorsensor_thread.start(colorsensor_callback);
+	
+	testmode_thread.start(test_mode);
+	normalmode_thread.start(normal_mode);
+	advancedmode_thread.start(advanced_mode);
+	
+	pc.printf("\n\rTest thread id: %x", testmode_thread.gettid());
+	pc.printf("\n\rNormal thread id: %x", normalmode_thread.gettid());
+
+  pc.printf("\n\rmbed-os-rev: %d.%d.%d\r\n", MBED_MAJOR_VERSION, MBED_MINOR_VERSION, MBED_PATCH_VERSION);	
+	
+	InterruptIn userButton(PB_2);	
+	userButton.rise(&userButton_isr);
+	
+	//current_mode = TEST_MODE;	
+	//mode_ticker.attach(mode_signal_sender, TEST_MODE_TIME);
+	
+	current_mode = ERROR_MODE;	
+	pc.printf("\n\rPress user button to start");
+		
+	while(true){ //Send signals to the current mode threads
+		wait(osWaitForever);
+	}
+}

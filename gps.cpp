@@ -26,10 +26,9 @@ void gps_callback(){
 	gps.sendCommand(PGCMD_ANTENNA);
 	
 	Thread::wait(1000);
-	char c;
 	
 	while(true){
-		c = gps.read();   //queries the GPS
+		gps.read();   //c = gps.read(); pc.printf(c);
 		//check if we recieved a new message from GPS, if so, attempt to parse it,
 		if ( gps.newNMEAreceived() ) {
 			if ( !gps.parse(gps.lastNMEA()) ) {
@@ -44,7 +43,5 @@ void gps_callback(){
 		gps_info.hour = gps.hour;
 		gps_info.minute = gps.minute;
 		gps_info.seconds = gps.seconds;
-		
-		Thread::wait(2000);
    }
 }
