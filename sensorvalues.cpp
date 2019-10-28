@@ -51,19 +51,40 @@ void SensorValues::set(size_t i, float value){
 	v[i] = value;
 }
 
+int SensorValues::get_index_of_key(const char* key){
+  for(int i = 0; i < NSENSORVALUES; i++){
+		if (keys[i].compare(key))
+			return i;
+};
+
 float & SensorValues::operator[](size_t i){
 	return v[i];
 }
 
 float & SensorValues::operator[](const char* key){
-	for(int i = 0; i < NSENSORVALUES; i++){
-		if (keys[i].compare(key))
-			return v[i];
-	}
+  int i = get_index_of_key(key);
+  if(i >= 0 && i < NSENSORVALUES){
+    return v[i];
+  }
 }
 
 void SensorValues::serial_print(){
 	for(int i = 0; i < NSENSORVALUES; i++){
 		pc.printf("\n\r%s: %f", keys[i].c_str(), v[i]);
 	}
+}
+
+bool SensorValues::alarm(const char* key){
+  int i = get_index_of_key(key);
+  if(i >= 0 && i < NSENSORVALUES){
+    return (v[i] > max[i] || v[i] < min[i]);
+  }  
+}
+
+void SensorValues::set_color(char color){
+  this->color = color;
+}
+
+bool SensorValues::alarm(const char* key){
+  
 }

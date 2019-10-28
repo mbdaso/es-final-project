@@ -46,4 +46,9 @@ extern float x, y, z;
 extern Serial pc;
 
 extern EventFlags event_flags;
+
+//TODO: arreglar
+extern DigitalOut ledR; //RGB led - red light
+extern DigitalOut ledG;  //RGB led - green light 
+extern DigitalOut ledB;  //RGB led - blue light
 #endif

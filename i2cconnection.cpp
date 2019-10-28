@@ -38,7 +38,9 @@ char getMax(int r, int g, int b) {
 }
 
 void i2c_callback(); 
-
+DigitalOut ledR(PH_0); //RGB led - red light
+DigitalOut ledG(PH_1);  //RGB led - green light 
+DigitalOut ledB(PB_13);  //RGB led - blue light
 void i2c_callback() {
   I2C i2c(PB_9,PB_8);
 	i2c.frequency(100000);
@@ -53,9 +55,7 @@ void i2c_callback() {
 	
 	DigitalOut whiteLed(PB_7); // TCS34725 led
 	
-	DigitalOut ledR(PH_0); //RGB led - red light
-	DigitalOut ledG(PH_1);  //RGB led - green light 
-	DigitalOut ledB(PB_13);  //RGB led - blue light
+	
 	
 	//Variable for ISR
 	bool read_Colour;

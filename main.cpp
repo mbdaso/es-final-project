@@ -41,7 +41,7 @@ void userButton_isr(){
 			mode_ticker.attach(mode_signal_sender, ADVANCED_MODE_TIME);
 			break;
 		default:
-			current_mode = TEST_MODE;			
+			current_mode = TEST_MODE;
 			mode_ticker.attach(mode_signal_sender, TEST_MODE_TIME);
 			break;
 		/*default:

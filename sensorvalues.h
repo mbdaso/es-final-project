@@ -23,17 +23,23 @@ class MbedString{
 
 class SensorValues{
 	float * v;
+  float * max;
+  float * min;
 	MbedString * keys;
+  char color;
 
 	public:
 	SensorValues();
 	float get(size_t);
 	void set(size_t, float);
 	
+  int get_index_of_key(const char *);
 	float& operator[](const size_t);
 	float& operator[](const char*);
 	void setvalues(float);
 	
 	void serial_print();
+  void set_color(char);
+  bool alarm(const char*);
 };
 #endif
