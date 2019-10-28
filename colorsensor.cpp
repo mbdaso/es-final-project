@@ -38,9 +38,9 @@ void colorsensor_callback() {
 	
 	DigitalOut whiteLed(PB_7); // TCS34725 led
 	
-	DigitalOut ledR(PA_14); //RGB led - red light
+	DigitalOut ledR(PH_0); //RGB led - red light
 	DigitalOut ledG(PH_1);  //RGB led - green light 
-	DigitalOut ledB(PA_4);  //RGB led - blue light
+	DigitalOut ledB(PB_13);  //RGB led - blue light
 	
 	//Variable for ISR
 	bool read_Colour;
