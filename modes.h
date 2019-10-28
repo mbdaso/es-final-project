@@ -1,6 +1,7 @@
 #ifndef MODES_H
 #define MODES_H
 #include "rtos.h"
+#include "common.h"
 
 extern Thread testmode_thread; // 1K stack size
 extern Thread normalmode_thread; // 1K stack size
@@ -26,11 +27,22 @@ class SensorValues{
 		void clear();
 };
 
-struct HourInfo{
-	SensorValues mean, max, min;
-	char dominant_colour;
-	
-	HourInfo(): dominant_colour('n'){}
+class HourInfo{
+	public:
+		SensorValues mean, max, min;
+		char dominant_colour;
+		int samples_per_hour;
+		int nsamples;
+		bool ready;
+		
+		HourInfo(): dominant_colour('n'), 
+								samples_per_hour(30/NORMAL_MODE_TIME){}
+		void clear();
+		void update(SensorValues);
+	private:
+		void update_max(SensorValues);
+		void update_min(SensorValues);
+		void update_mean(SensorValues);
 };
 
 extern HourInfo hour_info;

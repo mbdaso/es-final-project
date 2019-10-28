@@ -7,8 +7,6 @@ because this is more portable.*/
 #define COMMON_H
 
 #include "rtos.h"
-#include "common.h"
-#include "modes.h"
 
 //https://os.mbed.com/docs/mbed-os/v5.14/apis/eventflags.html
 #define TEST_MODE (1UL << 0)
@@ -17,7 +15,7 @@ because this is more portable.*/
 #define ERROR_MODE (1UL << 3)
 
 #define TEST_MODE_TIME 2
-#define NORMAL_MODE_TIME 0.1
+#define NORMAL_MODE_TIME 3
 #define ADVANCED_MODE_TIME 0.5
 
 
@@ -52,6 +50,4 @@ extern char dominant_color;
 extern Serial pc;
 
 extern EventFlags event_flags;
-
-extern HourInfo hour_info;
 #endif
