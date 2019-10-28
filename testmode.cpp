@@ -12,7 +12,7 @@ void test_mode() {
 		\n\rACCELEROMETER: X_axis: %.2f, Y_axis: %.2f, Z_axis: %.2f\
 		\n\rTEMP/HUM: Temperature: %.2f C. Relative Humidity: %.4f%\
 		\n\r#Sats: %d, Lat(UTC): %.6f, Long(UTC): %.6f, Altitude: %.1f\
-		\n\rGPS_time: %2d:%2d:%2d\
+		\n\rGPS_time: %02d:%02d:%02d\
 		\n\rClear (%d), Red (%d), Green (%d), Blue (%d), Dominant Color: %c\
 		\n",\
 		valueSM,\

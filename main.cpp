@@ -74,11 +74,11 @@ int main(){
 	InterruptIn userButton(PB_2);	
 	userButton.rise(&userButton_isr);
 	
-	//current_mode = TEST_MODE;	
-	//mode_ticker.attach(mode_signal_sender, TEST_MODE_TIME);
+	current_mode = NORMAL_MODE;	
+	mode_ticker.attach(mode_signal_sender, NORMAL_MODE_TIME);
 	
-	current_mode = ERROR_MODE;	
-	pc.printf("\n\rPress user button to start");
+	//current_mode = ERROR_MODE;	
+	//pc.printf("\n\rPress user button to start");
 		
 	while(true){ //Send signals to the current mode threads
 		wait(osWaitForever);

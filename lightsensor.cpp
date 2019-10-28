@@ -15,8 +15,3 @@ void lightsensor_callback() {
 		Thread::wait(200);
 	}
 }	
-
-
-
-
-  

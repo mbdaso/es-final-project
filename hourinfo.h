@@ -1,26 +1,6 @@
 #ifndef HOURINFO_H
 #define HOURINFO_H
-#define N 7
-#include <map>
-#include <string>
-#include <utility> // TODO: quitar
-/* Indices del array de SensorValues
- * 0 = temperature
- *	1 = humidity
- * 2 = light
- * 3 = soilmoisture
- * 4 = x
- * 5 = y
- * 6 = z
- */
-class SensorValues{
-	public:
-	std::map<std::string, float> m;
-
-	SensorValues();
-	float get(std::string);
-	void setvalues(float);
-};
+#include "sensorvalues.h"
 
 class HourInfo{
 	public:
@@ -31,6 +11,7 @@ class HourInfo{
 		HourInfo();
 		void clear();
 		void update(SensorValues, char last_colour);
+		void serial_print();
 	private:
 		void update_max(SensorValues);
 		void update_min(SensorValues);
