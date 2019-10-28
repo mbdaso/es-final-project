@@ -148,24 +148,7 @@
           <Name>UL2CM3(-S0 -C0 -P0 -FD20000000 -FC1000 -FN1 -FF0STM32L0xx_192 -FS08000000 -FL030000 -FP0($$Device:STM32L072CZ$CMSIS\Flash\STM32L0xx_192.FLM))</Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
-      <Breakpoint>
-        <Bp>
-          <Number>0</Number>
-          <Type>0</Type>
-          <LineNumber>69</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>0</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
-          <Filename>.\main.cpp</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression></Expression>
-        </Bp>
-      </Breakpoint>
+      <Breakpoint/>
       <WatchWindow1>
         <Ww>
           <count>0</count>
@@ -16390,26 +16373,14 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\threadANALOG.cpp</PathWithFileName>
-      <FilenameWithoutPath>threadANALOG.cpp</FilenameWithoutPath>
+      <PathWithFileName>.\soilmoisture.cpp</PathWithFileName>
+      <FilenameWithoutPath>soilmoisture.cpp</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
     <File>
       <GroupNumber>2</GroupNumber>
       <FileNumber>1343</FileNumber>
-      <FileType>8</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>.\humiditytemperature.cpp</PathWithFileName>
-      <FilenameWithoutPath>humiditytemperature.cpp</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>2</GroupNumber>
-      <FileNumber>1344</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -16421,7 +16392,7 @@
     </File>
     <File>
       <GroupNumber>2</GroupNumber>
-      <FileNumber>1345</FileNumber>
+      <FileNumber>1344</FileNumber>
       <FileType>5</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -16433,19 +16404,7 @@
     </File>
     <File>
       <GroupNumber>2</GroupNumber>
-      <FileNumber>1346</FileNumber>
-      <FileType>8</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>.\accelerometer.cpp</PathWithFileName>
-      <FilenameWithoutPath>accelerometer.cpp</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>2</GroupNumber>
-      <FileNumber>1347</FileNumber>
+      <FileNumber>1345</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -16457,7 +16416,7 @@
     </File>
     <File>
       <GroupNumber>2</GroupNumber>
-      <FileNumber>1348</FileNumber>
+      <FileNumber>1346</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -16469,7 +16428,7 @@
     </File>
     <File>
       <GroupNumber>2</GroupNumber>
-      <FileNumber>1349</FileNumber>
+      <FileNumber>1347</FileNumber>
       <FileType>5</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -16481,7 +16440,7 @@
     </File>
     <File>
       <GroupNumber>2</GroupNumber>
-      <FileNumber>1350</FileNumber>
+      <FileNumber>1348</FileNumber>
       <FileType>5</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -16493,19 +16452,7 @@
     </File>
     <File>
       <GroupNumber>2</GroupNumber>
-      <FileNumber>1351</FileNumber>
-      <FileType>8</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>.\colorsensor.cpp</PathWithFileName>
-      <FilenameWithoutPath>colorsensor.cpp</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>2</GroupNumber>
-      <FileNumber>1352</FileNumber>
+      <FileNumber>1349</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -16517,7 +16464,7 @@
     </File>
     <File>
       <GroupNumber>2</GroupNumber>
-      <FileNumber>1353</FileNumber>
+      <FileNumber>1350</FileNumber>
       <FileType>5</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -16529,7 +16476,7 @@
     </File>
     <File>
       <GroupNumber>2</GroupNumber>
-      <FileNumber>1354</FileNumber>
+      <FileNumber>1351</FileNumber>
       <FileType>5</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -16541,7 +16488,7 @@
     </File>
     <File>
       <GroupNumber>2</GroupNumber>
-      <FileNumber>1355</FileNumber>
+      <FileNumber>1352</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -16553,7 +16500,7 @@
     </File>
     <File>
       <GroupNumber>2</GroupNumber>
-      <FileNumber>1356</FileNumber>
+      <FileNumber>1353</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -16565,7 +16512,7 @@
     </File>
     <File>
       <GroupNumber>2</GroupNumber>
-      <FileNumber>1357</FileNumber>
+      <FileNumber>1354</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -16577,7 +16524,7 @@
     </File>
     <File>
       <GroupNumber>2</GroupNumber>
-      <FileNumber>1358</FileNumber>
+      <FileNumber>1355</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -16589,7 +16536,7 @@
     </File>
     <File>
       <GroupNumber>2</GroupNumber>
-      <FileNumber>1359</FileNumber>
+      <FileNumber>1356</FileNumber>
       <FileType>5</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -16601,7 +16548,7 @@
     </File>
     <File>
       <GroupNumber>2</GroupNumber>
-      <FileNumber>1360</FileNumber>
+      <FileNumber>1357</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -16613,13 +16560,25 @@
     </File>
     <File>
       <GroupNumber>2</GroupNumber>
-      <FileNumber>1361</FileNumber>
+      <FileNumber>1358</FileNumber>
       <FileType>5</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>.\sensorvalues.h</PathWithFileName>
       <FilenameWithoutPath>sensorvalues.h</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>2</GroupNumber>
+      <FileNumber>1359</FileNumber>
+      <FileType>8</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>.\i2cconnection.cpp</PathWithFileName>
+      <FilenameWithoutPath>i2cconnection.cpp</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

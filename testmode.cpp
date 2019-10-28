@@ -21,6 +21,6 @@ void test_mode() {
 		temp, hum,\
 		gps_info.nsats, gps_info.lat, gps_info.lon, gps_info.alt,\
 		gps_info.hour, gps_info.minute, gps_info.seconds,\
-		clear_value, red_value, green_value, blue_value, dominant_color);
+		clear_value, red_value, green_value, blue_value, dominant_colour);
 	}
 }

@@ -21,31 +21,27 @@ because this is more portable.*/
 
 
 extern int current_mode; 
-extern Thread threadANALOG;
-extern void ANALOG_thread();
+extern Thread soilmoisture_thread;
+extern void soilmoisture_callback();
 extern float valueSM;
 
 extern Thread lightsensor_thread;
 extern void lightsensor_callback();
 extern float valueLight;
 
-extern Thread humiditytemperature_thread;
-extern void humiditytemperature_callback();
-extern float hum, temp;
-
-extern Thread accelerometer_thread;
-extern void accelerometer_callback();
-extern float x, y, z;
 
 
 extern struct Gps_info gps_info;
 extern Thread gps_thread;
 //extern void gps_callback();
 
-extern Thread colorsensor_thread;
-extern void colorsensor_callback();
+extern Thread i2c_thread;
+extern void i2c_callback();
+extern float hum, temp;
 extern int clear_value, red_value, green_value, blue_value;
-extern char dominant_color;
+extern char dominant_colour;
+extern float x, y, z;
+
 
 extern Serial pc;
 

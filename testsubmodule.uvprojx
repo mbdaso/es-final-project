@@ -7093,14 +7093,9 @@
               <FilePath>.\mbed_config.h</FilePath>
             </File>
             <File>
-              <FileName>threadANALOG.cpp</FileName>
+              <FileName>soilmoisture.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>.\threadANALOG.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>humiditytemperature.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>.\humiditytemperature.cpp</FilePath>
+              <FilePath>.\soilmoisture.cpp</FilePath>
             </File>
             <File>
               <FileName>MMA8451Q.cpp</FileName>
@@ -7111,11 +7106,6 @@
               <FileName>MMA8451Q.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\MMA8451Q.h</FilePath>
-            </File>
-            <File>
-              <FileName>accelerometer.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>.\accelerometer.cpp</FilePath>
             </File>
             <File>
               <FileName>gps.cpp</FileName>
@@ -7136,11 +7126,6 @@
               <FileName>gps.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\gps.h</FilePath>
-            </File>
-            <File>
-              <FileName>colorsensor.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>.\colorsensor.cpp</FilePath>
             </File>
             <File>
               <FileName>lightsensor.cpp</FileName>
@@ -7191,6 +7176,11 @@
               <FileName>sensorvalues.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\sensorvalues.h</FilePath>
+            </File>
+            <File>
+              <FileName>i2cconnection.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>.\i2cconnection.cpp</FilePath>
             </File>
           </Files>
         </Group>

@@ -21,7 +21,7 @@ void normal_mode(){
 		last["z"] = z;
 		//Actualizar hour_info
 		if(nsamples > 2)
-			hour_info.update(last, dominant_color);
+			hour_info.update(last, dominant_colour);
 		//Imprimir datos del gps
 		//pc.printf("\n\rNormal: Longitude: %f Latitude: %f", gps_info.lon, gps_info.lat);
 		pc.printf("\n\rHour: %02d:%02d:%02d - %d", gps_info.hour, gps_info.minute, gps_info.seconds, nsamples);

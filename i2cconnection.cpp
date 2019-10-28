@@ -1,14 +1,21 @@
 #include "mbed.h"
+#include "rtos.h"
+#include "MMA8451Q.h"
+#include "common.h"
 
-// We set the sensor address. For TCS34725 is 0x29 = ‭‭0010 1001‬ (bin) ->> ‭0101 0010‬ (bin) = 0x52
-// We shift 1 bit to the left because in I2C protocol slave address is 7-bit. So we discard the 8th bit
+#define MMA8451_I2C_ADDRESS (0x1d<<1)
 #define SENSOR_ADDR (0x29<<1)
+
+float hum, temp;
+
 int clear_value, red_value, green_value, blue_value;
-char dominant_color;
+char dominant_colour;
 
 bool readColour =  false; //Variable for ISR
 
-Thread colorsensor_thread(osPriorityNormal, 1024); // 1K stack size
+float x, y, z;
+
+Thread i2c_thread(osPriorityNormal, 2048); // 1K stack size
 
 //ISR code
 void read_colour (void) {
@@ -22,7 +29,7 @@ char getMax(int r, int g, int b) {
     result = 'r';  
   } 
 	else if (g>b){
-    result = 'r';
+    result = 'g';
   }
   else{
     result = 'b';
@@ -30,11 +37,19 @@ char getMax(int r, int g, int b) {
   return result;
 }
 
-void colorsensor_callback(); 
+void i2c_callback(); 
 
-void colorsensor_callback() {
-  // Example program connecting the TCS34725 Color Sensor to the B-L072Z-LRWAN1 using I2C
-	I2C i2c(PB_9,PB_8); //pins for I2C communication (SDA, SCL)
+void i2c_callback() {
+  I2C i2c(PB_9,PB_8);
+	i2c.frequency(100000);
+	
+	MMA8451Q acc(PB_9, PB_8, MMA8451_I2C_ADDRESS);
+	
+	//TEMP/HUM DECLARATIONS
+	char tx_buff[2];
+	char rx_buff[2];
+	
+	//RGB DECLARATIONS
 	
 	DigitalOut whiteLed(PB_7); // TCS34725 led
 	
@@ -51,41 +66,12 @@ void colorsensor_callback() {
 	t.attach(read_colour, 1.0); // Every second the ticker triggers an interruption
   green = 1; // LED of B-L072Z-LRWAN1 board on
     
-  // Connect to the Color sensor and verify whether we connected to the correct sensor. 
-    
-  //  i2c.frequency(200000);
-  /*******************************************************
-	* id_regval contains command register value: ‭1001 0010 *
-	* COMMAND REGISTER structure                           *
-	* 7   |  6     5  |  4   3   2   1  0                  *
-	* CMD      TYPE          ADDR/SF                       *
-	*                                                      *
-	* CMD=1                                                *
-	* TYPE=00 -> repeated byte protocol transaction        *
-	* ADDR/SF= 10010 -> ADDR 0x12 - Device ID              *
-	********************************************************/
-	char id_regval[1] = {0x92}; //‭1001 0010‬ (bin)
-	char data[1] = {0}; //‭0000 0000‬
+	char id_regval[1] = {0x92}; //?1001 0010? (bin)
+	char data[1] = {0}; //?0000 0000?
 	
-	/**********************************************************************
-	* int write(int address, const char *data, int length, bool repeated) *
-	* int read(int address, char *data, int length, bool repeated)        *
-	***********************************************************************/
 	//We obtain device ID from ID register (0x12)
   i2c.write(SENSOR_ADDR,id_regval,1, true);
   i2c.read(SENSOR_ADDR,data,1,false); 
-	
-	   //We check that the ID is the TCS34725 one. If it is, we switch off a LED on the board, wait for 2s, and switch on again
-	if (data[0]==0x44) { //‭ 0100 0100‬ -> Value for the part number (0x44 for TCS34725)
-		green = 0;
-		wait (1);
-		green = 1;
-	} 
-	else {
-		green = 0;
-	}
-	
-	// Initialize color sensor
     
 	// Timing register address 0x01 (0000 0001). We set 1st bit to 1 -> 1000 0001
 	char timing_register[2] = {0x81,0x50}; //0x50 ~ 400ms
@@ -100,19 +86,40 @@ void colorsensor_callback() {
 	i2c.write(SENSOR_ADDR,enable_register,2,false);
     
   // Read data from color sensor (Clear/Red/Green/Blue)
-	char clear_reg[1] = {0x94}; // {‭1001 0100‬} -> 0x14 and we set 1st bit to 1
+	char clear_reg[1] = {0x94}; // {?1001 0100?} -> 0x14 and we set 1st bit to 1
 	char clear_data[2] = {0,0};
-	char red_reg[1] = {0x96}; // {‭1001 0110‬} -> 0x16 and we set 1st bit to 1
+	char red_reg[1] = {0x96}; // {?1001 0110?} -> 0x16 and we set 1st bit to 1
 	char red_data[2] = {0,0};
-	char green_reg[1] = {0x98}; // {‭1001 1000‬} -> 0x18 and we set 1st bit to 1
+	char green_reg[1] = {0x98}; // {?1001 1000?} -> 0x18 and we set 1st bit to 1
 	char green_data[2] = {0,0};
-	char blue_reg[1] = {0x9A}; // {‭1001 1010‬} -> 0x1A and we set 1st bit to 1
+	char blue_reg[1] = {0x9A}; // {?1001 1010?} -> 0x1A and we set 1st bit to 1
 	char blue_data[2] = {0,0};
+	
    
-	whiteLed = 1;
   while (true) {
+
+    // READ TEMPERATURE MEASURES
+			
+		tx_buff[0] = 0xF3;  // CMD: Measure Temperature, No Hold Master Mode
+				
+    i2c.write(0x80, (char *) tx_buff, 1);	// Device ADDR: 0x80 = SI7021 7-bits address shifted one bit left.
+    Thread::wait(100);
+    i2c.read(0x80, (char*) rx_buff, 2);		// Receive MSB = rx_buff[0], then LSB = rx_buff[1]
+  
+    temp = (((rx_buff[0] * 256 + rx_buff[1]) * 175.72) / 65536.0) - 46.85;	// Conversion based on Datasheet
+
+    tx_buff[0] = 0xF5;  // CMD: Measure Relative Humidity, No Hold Master Mode
+    
+    i2c.write(0x80, (char *) tx_buff, 1);
+    Thread::wait(100);
+    i2c.read(0x80, (char*) rx_buff, 2);		// Receive MSB first, then LSB
+  
+    hum = (((rx_buff[0] * 256 + rx_buff[1]) * 125.0) / 65536.0) - 6;				// Conversion based on Datasheet
 		
+		//READ RGB MEASURES
+			
 		if (read_Colour){
+			whiteLed = 1;
 			
 			readColour = 0; //readColour = false
 			//Reads clear value
@@ -145,29 +152,33 @@ void colorsensor_callback() {
 			blue_value = ((int)blue_data[1] << 8) | blue_data[0];
 				
 			//Obtains which one is the greatest - red, green or blue
-			dominant_color = getMax(red_value, green_value, blue_value);
+			dominant_colour = getMax(red_value, green_value, blue_value);
 		
 			//Switchs the color of the greatest value. First, we switch off all of them
 			ledR.write(1);
 			ledG.write(1);
 			ledB.write(1);
-			
-			switch (dominant_color){
-				case 'r':
-					ledR.write(0);
-					break;
-				case 'g':
-					ledG.write(0);
-					break;
-				case 'b':
-					ledB.write(0);
-					break;
-			} 
-			//whiteLed = 0;
+			if(current_mode == TEST_MODE){
+				switch (dominant_colour){
+					case 'r':
+						ledR.write(0);
+						break;
+					case 'g':
+						ledG.write(0);
+						break;
+					case 'b':
+						ledB.write(0);
+						break;
+				} 
+			}
+			whiteLed = 0;
+				
 		}
-		Thread::wait(1000);
+		
+		//READ ACCELEROMETES MEASURES
+		x = acc.getAccX();
+		y = acc.getAccY();
+		z = acc.getAccZ();
+		Thread::wait(200);
 	}
-}
-
-
-
+}  

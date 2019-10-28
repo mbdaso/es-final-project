@@ -3,11 +3,11 @@
 
 float valueSM=0.0;
 
-Thread threadANALOG(osPriorityNormal, 512); // 1K stack size
+Thread soilmoisture_thread(osPriorityNormal, 512); // 1K stack size
 
-void ANALOG_thread(); 
+void soilmoisture_callback(); 
 
-void ANALOG_thread() {
+void soilmoisture_callback() {
 	
 	AnalogIn soilmois(PA_0); 
 		

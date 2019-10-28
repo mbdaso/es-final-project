@@ -54,13 +54,15 @@ void userButton_isr(){
 
 int main(){
 	//Setup things
-	threadANALOG.start(ANALOG_thread);
+	soilmoisture_thread.start(soilmoisture_callback);
 	lightsensor_thread.start(lightsensor_callback);
 	gps_thread.start(gps_callback);
+	i2c_thread.start(i2c_callback);
 	
-  humiditytemperature_thread.start(humiditytemperature_callback);	
-	accelerometer_thread.start(accelerometer_callback);
-	colorsensor_thread.start(colorsensor_callback);
+	
+//  humiditytemperature_thread.start(humiditytemperature_callback);	
+//	accelerometer_thread.start(accelerometer_callback);
+//	colorsensor_thread.start(colorsensor_callback);
 	
 	testmode_thread.start(test_mode);
 	normalmode_thread.start(normal_mode);

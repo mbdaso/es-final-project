@@ -11,6 +11,9 @@ void HourInfo::clear(){
 	max.setvalues(-9999999);
 	min.setvalues(9999999); 
 	dominant_colour = 'n';
+	rgb_acc = new int [3];
+	for(int i = 0; i < 3; i++)
+		rgb_acc[i] = 0;
 	//samples_per_hour = (30/NSENSORVALUESORMAL_MODE_TIME);
 }
 
@@ -18,7 +21,37 @@ void HourInfo::update(SensorValues v, char last_colour){
 		update_max(v);
 		update_min(v);
 		update_mean(v);
+	
+		update_dominant_colour(last_colour);
 }
+
+void HourInfo::update_dominant_colour(char last_colour){
+	if(last_colour == 'r')
+		rgb_acc[0]++;
+	if(last_colour == 'g')
+		rgb_acc[1]++;
+	if(last_colour == 'b')
+		rgb_acc[2]++;
+	
+	dominant_colour = maximum(rgb_acc);
+}
+
+char HourInfo::maximum(int rgb[3]){
+	int max = -1;
+	int max_index = 0;
+	for(int i = 0; i < 3; i++){
+		if(max < rgb_acc[i])
+			max_index = i;
+	}
+	
+	if(max_index == 0)
+		return 'r';
+	if(max_index == 1)
+		return 'g';
+	if(max_index == 2)
+		return 'b';
+}
+
 void HourInfo::update_max(SensorValues v){
 	for(int i = 0; i < NSENSORVALUES; i++){
 		if(max[i] < v[i])
