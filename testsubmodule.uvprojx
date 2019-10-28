@@ -7172,6 +7172,16 @@
               <FileType>8</FileType>
               <FilePath>.\advancedmode.cpp</FilePath>
             </File>
+            <File>
+              <FileName>hourinfo.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>.\hourinfo.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>hourinfo.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\hourinfo.h</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

@@ -6,69 +6,6 @@
 
 Thread normalmode_thread(osPriorityNormal, 1024); // 1K stack size
 
-
-	
-void SensorValues::clear(){
-	temperature = 0;
-	humidity = 0;
-	light = 0;
-	soilmoisture = 0;
-	x = 0;
-	y = 0;
-	z = 0;
-}
-
-void HourInfo::clear(){
-	mean.clear();
-	max.clear();
-	min.clear();
-	dominant_colour = 'n';
-}
-
-void HourInfo::update(SensorValues v){
-		update_max(v);
-		update_min(v);
-		update_mean(v);
-}
-/*struct SensorValues{
-	float temperature;
-	float humidity;
-	float light;
-	float soilmoisture;
-	float x, y, z;*/
-void HourInfo::update_max(SensorValues v){
-	max.temperature = (v.temperature > max.temperature) ? v.temperature : max.temperature; 
-	max.humidity = (v.humidity > max.humidity) ? v.humidity : max.humidity; 
-	max.light = (v.light > max.light) ? v.light : max.light; 
-	max.soilmoisture = (v.soilmoisture > max.soilmoisture) ? v.soilmoisture : max.soilmoisture; 
-	max.x = (v.x > max.x) ? v.x : max.x; 
-	max.y = (v.y > max.y) ? v.y : max.y; 
-	max.z = (v.z > max.z) ? v.z : max.z; 
-}
-
-void HourInfo::update_min(SensorValues v){
-	pc.printf("\n\rv.temperature %f ", v.temperature);
-	min.temperature = (v.temperature < min.temperature) ? v.temperature : min.temperature; 
-	min.humidity = (v.humidity < min.humidity) ? v.humidity : min.humidity; 
-	min.light = (v.light < min.light) ? v.light : min.light; 
-	min.soilmoisture = (v.soilmoisture < min.soilmoisture) ? v.soilmoisture : min.soilmoisture; 
-	min.x = (v.x < min.x) ? v.x : min.x; 
-	min.y = (v.y < min.y) ? v.y : min.y; 
-	min.z = (v.z < min.z) ? v.z : min.z; 
-}
-
-void HourInfo::update_mean(SensorValues v){
-	mean.temperature = v.temperature / samples_per_hour;
-	mean.humidity = v.humidity / samples_per_hour;
-	mean.light = v.light / samples_per_hour;
-	mean.soilmoisture = v.soilmoisture / samples_per_hour;
-	mean.x = v.x / samples_per_hour;
-	mean.y = v.y / samples_per_hour;
-	mean.z = v.z / samples_per_hour;
-}
-
-HourInfo hour_info;
-
 void normal_mode(){
 	int elapsed_t = 0, nsamples = 0;
 	//int hour = 60*60;

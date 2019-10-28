@@ -15,7 +15,15 @@
  */
 class SensorValues{
 	public:
-	std::map<std::string, float> m;
+	std::map<std::string, float> m = {
+		{"temperature", 0.0},
+		{"humidity", 0.0},
+		{"light", 0.0},
+		{"soilmoisture", 0.0},
+		{"x", 0.0}, 
+		{"y", 0.0}, 
+		{"z", 0.0}
+	};
 
 	SensorValues();
 	float get(std::string);
@@ -26,9 +34,11 @@ class HourInfo{
 	public:
 		SensorValues mean, max, min, acc;
 		char dominant_colour;
+		int samples_per_hour;
 		int nvalues;
-	
-		HourInfo();
+
+		HourInfo(): dominant_colour('n'), 
+		samples_per_hour(30/NORMAL_MODE_TIME){}
 		void clear();
 		void update(SensorValues, char last_colour);
 	private:
