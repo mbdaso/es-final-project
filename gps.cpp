@@ -11,7 +11,7 @@
 	uint8_t seconds;
 } gps_info;*/
 
-Thread gps_thread(osPriorityNormal, 2048); // 2K stack size
+Thread gps_thread(osPriorityNormal, 1024); // 2K stack size
 Gps_info gps_info;
 //void gps_callback(); 
 

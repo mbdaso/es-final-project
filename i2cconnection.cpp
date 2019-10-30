@@ -41,9 +41,11 @@ void i2c_callback();
 DigitalOut ledR(PH_0); //RGB led - red light
 DigitalOut ledG(PH_1);  //RGB led - green light 
 DigitalOut ledB(PB_13);  //RGB led - blue light
+
 void i2c_callback() {
   I2C i2c(PB_9,PB_8);
 	i2c.frequency(100000);
+	//Inicializar PWM
 	
 	MMA8451Q acc(PB_9, PB_8, MMA8451_I2C_ADDRESS);
 	
@@ -52,10 +54,7 @@ void i2c_callback() {
 	char rx_buff[2];
 	
 	//RGB DECLARATIONS
-	
 	DigitalOut whiteLed(PB_7); // TCS34725 led
-	
-	
 	
 	//Variable for ISR
 	bool read_Colour;
@@ -155,10 +154,11 @@ void i2c_callback() {
 			dominant_colour = getMax(red_value, green_value, blue_value);
 		
 			//Switchs the color of the greatest value. First, we switch off all of them
-			ledR.write(1);
-			ledG.write(1);
-			ledB.write(1);
+			
 			if(current_mode == TEST_MODE){
+				ledR.write(1);
+				ledG.write(1);
+				ledB.write(1);
 				switch (dominant_colour){
 					case 'r':
 						ledR.write(0);
@@ -172,7 +172,6 @@ void i2c_callback() {
 				} 
 			}
 			whiteLed = 0;
-				
 		}
 		
 		//READ ACCELEROMETES MEASURES

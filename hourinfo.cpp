@@ -33,23 +33,18 @@ void HourInfo::update_dominant_colour(char last_colour){
 	if(last_colour == 'b')
 		rgb_acc[2]++;
 	
-	dominant_colour = maximum(rgb_acc);
+	dominant_colour = maximum_rgb(rgb_acc);
 }
 
-char HourInfo::maximum(int rgb[3]){
+char HourInfo::maximum_rgb(int rgb[3]){
 	int max = -1;
 	int max_index = 0;
+	char num_rgb[3] = {'r', 'g', 'b'};
 	for(int i = 0; i < 3; i++){
 		if(max < rgb_acc[i])
 			max_index = i;
 	}
-	
-	if(max_index == 0)
-		return 'r';
-	if(max_index == 1)
-		return 'g';
-	if(max_index == 2)
-		return 'b';
+	return num_rgb[max_index];
 }
 
 void HourInfo::update_max(SensorValues v){

@@ -13,7 +13,6 @@ void soilmoisture_callback() {
 		
 	while (true) {
 		valueSM=soilmois*100;
-
 		Thread::wait(200);		  
   }
 }

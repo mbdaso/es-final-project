@@ -59,11 +59,10 @@ int main(){
 	gps_thread.start(gps_callback);
 	i2c_thread.start(i2c_callback);
 	
-	
 //  humiditytemperature_thread.start(humiditytemperature_callback);	
 //	accelerometer_thread.start(accelerometer_callback);
 //	colorsensor_thread.start(colorsensor_callback);
-	
+
 	testmode_thread.start(test_mode);
 	normalmode_thread.start(normal_mode);
 	advancedmode_thread.start(advanced_mode);
@@ -82,7 +81,7 @@ int main(){
 	//current_mode = ERROR_MODE;	
 	//pc.printf("\n\rPress user button to start");
 		
-	while(true){ //Send signals to the current mode threads
+	while(true){ //Job done
 		wait(osWaitForever);
 	}
 }

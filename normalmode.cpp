@@ -7,23 +7,21 @@
 
 Thread normalmode_thread(osPriorityNormal, 1024); // 1K stack size
 
-#define MAX_TEMP 
+extern void alarm_callback();
 
-extern void normalmodergb_callback();
-void update_limits(SensorValues);
-int * alarms;
+SensorValues last;
 void normal_mode(){
-  
+  Thread alarm_thread(osPriorityNormal, 512);
+	alarm_thread.start(alarm_callback);
   //Lanzar otro hilo para el RGB
 	int nsamples = 0;
-	SensorValues last;
 	while(event_flags.wait_any(NORMAL_MODE)){
-    
 		//Recoger ultima muestra
 		last["temperature"] = temp;
 		last["humidity"] = hum;
 		last["light"] = valueLight;
 		last["soilmoisture"] = valueSM;
+		last["green_value"] = green_value;
 		last["x"] = x;
 		last["y"] = y;
 		last["z"] = z;
@@ -39,11 +37,6 @@ void normal_mode(){
 			hour_info.serial_print();
 			//nsamples = 0;
 		}
-    //Comprobar si los valores están fuera de rango
-    //Limits for every measured variable (temperature, humidity, ambient light, soil
-    //moisture, colour and acceleration) should be fixed. If current values of the measured
-    //parameters are outside the limits, the RGB LED should indicate this situation using
-    //different colour for every parameter.
 		nsamples++;
 	}
 }

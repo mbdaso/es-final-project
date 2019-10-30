@@ -7183,9 +7183,9 @@
               <FilePath>.\i2cconnection.cpp</FilePath>
             </File>
             <File>
-              <FileName>normalmodergb.cpp</FileName>
+              <FileName>alarm.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>.\normalmodergb.cpp</FilePath>
+              <FilePath>.\alarm.cpp</FilePath>
             </File>
           </Files>
         </Group>
