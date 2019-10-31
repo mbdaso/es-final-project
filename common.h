@@ -15,7 +15,7 @@ because this is more portable.*/
 #define ERROR_MODE (1UL << 3)
 
 #define TEST_MODE_TIME 2
-#define NORMAL_MODE_TIME 3
+#define NORMAL_MODE_TIME 30
 #define ADVANCED_MODE_TIME 0.5
 
 

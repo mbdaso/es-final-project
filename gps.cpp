@@ -11,7 +11,7 @@
 	uint8_t seconds;
 } gps_info;*/
 
-Thread gps_thread(osPriorityNormal, 1024); // 2K stack size
+Thread gps_thread(osPriorityNormal, 2048); // 2K stack size
 Gps_info gps_info;
 //void gps_callback(); 
 
@@ -27,6 +27,10 @@ void gps_callback(){
 	
 	Thread::wait(1000);
 	
+	uint16_t degrees;
+	float minutes;
+	
+	
 	while(true){
 		gps.read();   //c = gps.read(); pc.printf(c);
 		//check if we recieved a new message from GPS, if so, attempt to parse it,
@@ -37,10 +41,27 @@ void gps_callback(){
 		}
 		
 		gps_info.nsats = gps.satellites;
-		gps_info.lat = gps.latitude;
-		gps_info.lon = gps.longitude;
+		
+		degrees=gps.latitude/100.0;
+		minutes=(gps.latitude/100)-degrees;
+		gps_info.lat = degrees+(minutes*10.0/6.0);
+		if (gps.lat =='S'){
+			gps_info.lat=gps.lat*(-1);
+		}
+		
+		degrees=gps.longitude/100.0;
+		minutes=(gps.longitude/100)-degrees;
+		gps_info.lon = degrees+(minutes*10.0/6.0);
+		if (gps.lon=='W'){
+			gps_info.lon=gps.longitude*(-1);
+		}
+		
 		gps_info.alt = gps.altitude;
-		gps_info.hour = gps.hour;
+		
+		if(gps.hour!=23)
+			gps_info.hour = gps.hour+1;
+		else
+			gps_info.hour = 0;
 		gps_info.minute = gps.minute;
 		gps_info.seconds = gps.seconds;
    }
