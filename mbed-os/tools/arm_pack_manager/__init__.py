@@ -25,7 +25,7 @@ from tools.flash_algo import PackFlashAlgo
 
 warnings.filterwarnings("ignore")
 
-from fuzzywuzzy import process
+from rapidfuzz import process
 
 RootPackURL = "http://www.keil.com/pack/index.idx"
 
@@ -335,7 +335,7 @@ class Cache () :
         stdout.write("\n")
 
     def find_device(self, match) :
-        choices = process.extract(match, self.index.keys(), limit=len(self.index))
+        choices = process.extract(match, self.index.keys(), limit=None)
         choices = sorted([(v, k) for k, v in choices], reverse=True)
         if choices : choices = list(takewhile(lambda t: t[0] == choices[0][0], choices))
         return [(v, self.index[v]) for k,v in choices]
